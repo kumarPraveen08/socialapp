@@ -1,0 +1,9 @@
+{
+  "watch": ["src"],
+  "ext": ".js,.json",
+  "ignore": ["src/**/*.spec.js", "src/**/*.test.js", "src/seeders/*"],
+  "delay": "1000",
+  "events": {
+    "restart": "echo \"App restarted due to changes\""
+  }
+} 

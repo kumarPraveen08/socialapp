@@ -1,0 +1,347 @@
+Here's the **complete and detailed backend requirement specification** for your **Astrotalk-like dating app** using **Express**, **WebSocket (Socket.IO)**, **Agora**, **MongoDB**, and a full-featured **admin panel**, tailored for **React Native clients** (User App and Modal App).
+
+This includes **every system**, **feature**, **data flow**, **settings**, and **tech** needed for full production readiness.
+
+---
+
+## 🔧 **1. Core Backend Technologies**
+
+| Area          | Tech Used                      |
+| ------------- | ------------------------------ |
+| Framework     | Express.js                     |
+| Real-Time     | Socket.IO (WebSocket)          |
+| Live/Calls    | Agora SDK (Token API + SDK)    |
+| Database      | MongoDB (Mongoose)             |
+| Auth          | OTP-based (Twilio whatsapp otp & text otp)    |
+| Media Upload  | Cloudinary           		 |
+| Payments      | Razorpay, Paytm, PhonePe       |
+| Notifications | FCM (Firebase Cloud Messaging) |
+| Admin UI      | Custom Dashboard (REST API)    |
+| Image/Audio   | Sharp, FFmpeg                  |
+| Rate Limiting | Redis / Express middleware     |
+| Emails        | NodeMailer		         |
+| Admin CMS	| AdminJS		         |
+
+---
+
+## 🧩 **2. System Roles**
+
+1. **User**
+2. **Modal (Expert)**
+3. **Admin**
+
+---
+
+## 🧱 **3. Core Modules Overview**
+
+```
+/auth            (OTP login, sessions)
+/users           (User profile, wallet, history)
+/modals          (Modal profile, wallet, media)
+/chat            (WebSocket-based 1:1 chat)
+/calls           (Voice/Video Agora logic)
+/wallet          (Coin logic, transactions)
+/payments        (Paytm/GPay integration)
+/gifts           (Catalog, purchase, tracking)
+/media           (Upload, audio, videos)
+/admin           (All CRUD + config)
+/support         (FAQs, contact support)
+/notifications   (Push via FCM)
+/reports         (Report system)
+/livestream      (Agora-based modal live)
+/settings        (Theme, language, etc.)
+```
+
+---
+
+## 👥 **4. User & Modal Functionality (with History & Favorites)**
+
+### ➤ **User Features**
+
+* OTP Login (Phone verification) (text message and whatsapp otp)
+* View & edit profile
+* Wallet system with coins
+* Coin plan purchase via UPI (Paytm, GPay, PhonePe)
+* Favorite / like modals
+* View:
+
+  * Liked modals
+  * Activity history:
+
+    * **Chat History**
+    * **Voice Call History**
+    * **Video Call History**
+    * **Transaction History**
+    * **Recharge History**
+* Start/end chat, voice, video sessions
+* Send gifts (paid via coins)
+* View modal status (online, busy, offline)
+* View all modals with filter/search:
+
+  * Category
+  * Language
+  * Featured/Verified
+  * Online now
+* Report modal
+* App settings (language, theme, notifications)
+* Contact Support, FAQs
+* Logout, delete account
+
+---
+
+### ➤ **Modal Features**
+
+* OTP Login
+* Create and update profile
+
+  * Name, categories, languages
+  * Audio bio
+  * Media: images/videos
+* Status: online, busy, offline
+* Featured / Verified status (admin-controlled)
+* Receive gifts (count + value)
+* View:
+
+  * Call/Chat history
+  * Gift history
+  * Likes
+  * Wallet balance
+* **Withdraw coins**
+
+  * Trigger withdraw request
+  * Admin-controlled approval
+  * Commission applied before payout
+* Report user
+* Live stream hosting
+* Contact Support, FAQs
+
+---
+
+## 💬 **5. Real-time Chat System (Socket.IO)**
+
+* Private chat connection via sockets
+* Message types: Text, Image, Emoji
+* Seen, delivered, typing indicators
+* Track per-minute billing via server
+* Coin deduction logic:
+
+  * Deduct on start and/or per X seconds
+  * Stop when coins run out or user ends
+* History stored in DB
+* Message pagination for loading chat history
+
+---
+
+## 📞 **6. Voice & Video Calling (Agora + WebSocket)**
+
+* Token-based Agora integration
+* Real-time signaling via WebSocket
+* Coin-based per-minute billing
+* Coin deduction timer on backend
+* Automatic hang-up on coin exhaustion
+* Logs stored for:
+
+  * Duration
+  * Coins spent
+  * Start/end time
+  * Participants
+* Graceful reconnection support
+
+---
+
+## 🎁 **7. Gifts & Wallet System**
+
+### Gifts
+
+* Gift catalog (image, name, coin cost)
+* Send gift in chat/call/live
+* Modal receives gift count + value
+* Record all gift transactions
+
+### Wallet
+
+* Coin-based wallet per user
+* Coin Plans (Admin defined)
+* Recharge via Paytm/GPay/PhonePe
+* Recharge History
+* Coin deduction logs
+* Admin wallet adjustments
+* Check wallet before paid actions
+
+---
+
+## 💸 **8. Modal Wallet, Withdrawals & Commissions**
+
+### Workflow:
+
+1. User pays for chat/call using coins
+2. Coins are deducted from user wallet
+3. **Platform commission logic applies**
+4. Remaining coin value credited to modal wallet
+
+#### Commission
+
+* Admin can:
+
+  * Set global commission %
+  * Set per-modal commission %
+  * View logs of all commissions
+
+#### Withdrawals
+
+* Modal initiates withdraw request
+* Admin verifies & marks as paid
+* Withdraw history per modal
+* Option to cancel/reject requests
+
+---
+
+## 🔐 **9. Authentication & Security**
+
+* OTP-based login (phone)
+* JWT for protected routes
+* API rate limiting for abuse prevention
+* Secure media upload with signed URLs
+* Role-based access control (User, Modal, Admin)
+* 2FA for Admin Panel (optional)
+
+---
+
+## 📊 **10. Admin Panel (Web + API)**
+
+### Users
+
+* View/ban/delete/edit users
+* View history, coins, reports
+
+### Modals
+
+* View/edit/delete modal profiles
+* Set Verified / Featured
+* Set Commission %
+
+### Transactions
+
+* View recharge logs
+* Coin usage logs
+* Withdraw requests
+
+### Gifts
+
+* Create/update/delete gifts
+
+### Content
+
+* FAQs CRUD
+* Contact Support entries
+
+### Global Settings
+
+* Commission settings
+* payment option enable/disable
+* Maintenance mode
+* Push broadcast
+
+### Moderation
+
+* Flagged content (media, chats)
+* Manage reports
+* View all live sessions
+
+---
+
+## 🔔 **11. Notifications**
+
+* Push via FCM
+* On new chat, call, gift
+* Broadcast message by admin
+* Wallet low balance alert
+* Recharge success/failure
+
+---
+
+## 🌐 **12. Live Streaming Module (Agora + WebSocket)**
+
+* Modal starts live session
+* Users can join as audience
+* Viewers send gifts during stream
+* Show live gift count and viewers
+* Admin tools:
+
+  * End stream
+  * Kick modal
+  * Mute viewers
+* Stream metadata (title, category)
+
+---
+
+## 📄 **13. Support & FAQs**
+
+* FAQs list (via Admin panel)
+* Contact Support form (saved in DB)
+* Admin response tools
+* Push response to user via notification (optional)
+
+---
+
+## 📦 **14. Supporting Features**
+
+* Full-text search for modals
+* Pagination in:
+
+  * Modal list
+  * Chats
+  * History
+  * Gift catalog
+* Filtering by:
+
+  * Status, category, language, rating
+* Sorting: Most liked, most gifted, featured
+* Timezones handling (for accurate billing)
+* User/session analytics logs
+
+---
+
+## 🗃️ **15. Database (MongoDB Collections Suggestion)**
+
+```bash
+users
+modals
+coin_wallets
+coin_transactions
+calls
+chats
+chat_messages
+gifts
+gift_transactions
+coin_plans
+withdrawals
+faqs
+reports
+admin_users
+live_streams
+settings
+```
+
+---
+
+## ✅ Final Checklist
+
+| Area                | Covered |
+| ------------------- | ------- |
+| Auth & Security     | ✅       |
+| Wallet & Payments   | ✅       |
+| Real-time Systems   | ✅       |
+| Media Upload        | ✅       |
+| Admin Control       | ✅       |
+| Reporting & Logs    | ✅       |
+| Moderation          | ✅       |
+| Chat + Call + Live  | ✅       |
+| Modal Withdrawals   | ✅       |
+| Commission System   | ✅       |
+| Notifications       | ✅       |
+| FAQs & Support      | ✅       |
+| Favorites & History | ✅       |
+| Pagination/Filters  | ✅       |
+
+---
