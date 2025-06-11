@@ -1,0 +1,3510 @@
+{
+  "info": {
+    "name": "Dating App API",
+    "description": "API collection for Dating App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Authentication related endpoints",
+      "item": [
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/send-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "send-otp"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phone\": \"1234567890\",\n    \"type\": \"user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send OTP to phone number for authentication"
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/verify-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "verify-otp"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phone\": \"1234567890\",\n    \"otp\": \"123456\",\n    \"type\": \"user\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Verify OTP and login/register user"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            },
+            "description": "Logout user"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "description": "User related endpoints",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            },
+            "description": "Get user profile information"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "John Doe",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "john@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "dateOfBirth",
+                  "value": "1990-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "type": "text"
+                },
+                {
+                  "key": "profileImage",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            },
+            "description": "Update user profile information"
+          }
+        },
+        {
+          "name": "Get Wallet",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/wallet",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "wallet"]
+            },
+            "description": "Get user wallet information"
+          }
+        },
+        {
+          "name": "Get Favorites",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/favorites",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "favorites"]
+            },
+            "description": "Get user's favorite modals"
+          }
+        },
+        {
+          "name": "Add to Favorites",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/favorites/:modalId",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "favorites", ":modalId"],
+              "variable": [
+                {
+                  "key": "modalId",
+                  "value": "",
+                  "description": "ID of the modal to add to favorites"
+                }
+              ]
+            },
+            "description": "Add a modal to favorites"
+          }
+        },
+        {
+          "name": "Remove from Favorites",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/favorites/:modalId",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "favorites", ":modalId"],
+              "variable": [
+                {
+                  "key": "modalId",
+                  "value": "",
+                  "description": "ID of the modal to remove from favorites"
+                }
+              ]
+            },
+            "description": "Remove a modal from favorites"
+          }
+        },
+        {
+          "name": "Update Device Token",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"deviceToken\": \"your-device-token-here\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/device-token",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "device-token"]
+            },
+            "description": "Update user's device token for push notifications"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Modal",
+      "description": "Modal related endpoints",
+      "item": [
+        {
+          "name": "Get All Modals",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/modals",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals"]
+            },
+            "description": "Get list of all modals"
+          }
+        },
+        {
+          "name": "Get Modal by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/modals/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Modal ID"
+                }
+              ]
+            },
+            "description": "Get modal details by ID"
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/modals/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "profile"]
+            },
+            "description": "Get modal's own profile"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Modal Name",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "modal@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "dateOfBirth",
+                  "value": "1990-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "gender",
+                  "value": "female",
+                  "type": "text"
+                },
+                {
+                  "key": "categories",
+                  "value": "[\"chat\", \"astrology\"]",
+                  "type": "text"
+                },
+                {
+                  "key": "languages",
+                  "value": "[\"en\", \"hi\"]",
+                  "type": "text"
+                },
+                {
+                  "key": "experience",
+                  "value": "5",
+                  "type": "text"
+                },
+                {
+                  "key": "profileImages",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "audioBio",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/modals/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "profile"]
+            },
+            "description": "Update modal's profile"
+          }
+        },
+        {
+          "name": "Update Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"online\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/modals/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "status"]
+            },
+            "description": "Update modal's online status (online/offline/busy)"
+          }
+        },
+        {
+          "name": "Get Wallet",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/modals/wallet",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "wallet"]
+            },
+            "description": "Get modal's wallet information"
+          }
+        },
+        {
+          "name": "Request Withdrawal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 1000,\n    \"bankDetails\": {\n        \"accountNumber\": \"1234567890\",\n        \"ifscCode\": \"BANK0123456\",\n        \"accountHolderName\": \"Modal Name\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/modals/withdrawals",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "withdrawals"]
+            },
+            "description": "Request withdrawal from wallet"
+          }
+        },
+        {
+          "name": "Get Withdrawals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/modals/withdrawals",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "withdrawals"]
+            },
+            "description": "Get withdrawal history"
+          }
+        },
+        {
+          "name": "Update Device Token",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"deviceToken\": \"your-device-token-here\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/modals/device-token",
+              "host": ["{{baseUrl}}"],
+              "path": ["modals", "device-token"]
+            },
+            "description": "Update modal's device token for push notifications"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "description": "Chat related endpoints",
+      "item": [
+        {
+          "name": "Start Chat Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/sessions/:modalId",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "sessions", ":modalId"],
+              "variable": [
+                {
+                  "key": "modalId",
+                  "value": "",
+                  "description": "ID of the modal to start chat with"
+                }
+              ]
+            },
+            "description": "Start a new chat session with a modal"
+          }
+        },
+        {
+          "name": "Get Chat History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/sessions/:modalId",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "sessions", ":modalId"],
+              "variable": [
+                {
+                  "key": "modalId",
+                  "value": "",
+                  "description": "ID of the modal to get chat history with"
+                }
+              ]
+            },
+            "description": "Get chat history with a specific modal"
+          }
+        },
+        {
+          "name": "End Chat Session",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/sessions/:sessionId/end",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "sessions", ":sessionId", "end"],
+              "variable": [
+                {
+                  "key": "sessionId",
+                  "value": "",
+                  "description": "ID of the chat session to end"
+                }
+              ]
+            },
+            "description": "End an active chat session"
+          }
+        },
+        {
+          "name": "Get Session Messages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chat/sessions/:sessionId/messages",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "sessions", ":sessionId", "messages"],
+              "variable": [
+                {
+                  "key": "sessionId",
+                  "value": "",
+                  "description": "ID of the chat session"
+                }
+              ]
+            },
+            "description": "Get all messages in a chat session"
+          }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "message",
+                  "value": "Hello!",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chat/sessions/:sessionId/messages",
+              "host": ["{{baseUrl}}"],
+              "path": ["chat", "sessions", ":sessionId", "messages"],
+              "variable": [
+                {
+                  "key": "sessionId",
+                  "value": "",
+                  "description": "ID of the chat session"
+                }
+              ]
+            },
+            "description": "Send a message in a chat session"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Call",
+      "description": "Call related endpoints",
+      "item": [
+        {
+          "name": "Generate Call Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"modalId\": \"modal-id-here\",\n    \"callType\": \"video\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/call/token",
+              "host": ["{{baseUrl}}"],
+              "path": ["call", "token"]
+            },
+            "description": "Generate a token for starting a new call"
+          }
+        },
+        {
+          "name": "End Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/call/:callId/end",
+              "host": ["{{baseUrl}}"],
+              "path": ["call", ":callId", "end"],
+              "variable": [
+                {
+                  "key": "callId",
+                  "value": "",
+                  "description": "ID of the call to end"
+                }
+              ]
+            },
+            "description": "End an ongoing call"
+          }
+        },
+        {
+          "name": "Get Call History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/call/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["call", "history"]
+            },
+            "description": "Get user's call history"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallet",
+      "description": "Wallet related endpoints",
+      "item": [
+        {
+          "name": "Get Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallet/balance",
+              "host": ["{{baseUrl}}"],
+              "path": ["wallet", "balance"]
+            },
+            "description": "Get user's wallet balance"
+          }
+        },
+        {
+          "name": "Get Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wallet/transactions",
+              "host": ["{{baseUrl}}"],
+              "path": ["wallet", "transactions"]
+            },
+            "description": "Get user's transaction history"
+          }
+        },
+        {
+          "name": "Add Money",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 1000,\n    \"paymentMethod\": \"card\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/wallet/add-money",
+              "host": ["{{baseUrl}}"],
+              "path": ["wallet", "add-money"]
+            },
+            "description": "Add money to wallet"
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"paymentId\": \"payment-id-here\",\n    \"orderId\": \"order-id-here\",\n    \"signature\": \"signature-here\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/wallet/verify-payment",
+              "host": ["{{baseUrl}}"],
+              "path": ["wallet", "verify-payment"]
+            },
+            "description": "Verify payment after adding money"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gift",
+      "description": "Gift related endpoints",
+      "item": [
+        {
+          "name": "Get All Gifts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/gift",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift"]
+            },
+            "description": "Get list of all available gifts"
+          }
+        },
+        {
+          "name": "Get Gift by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/gift/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID of the gift"
+                }
+              ]
+            },
+            "description": "Get details of a specific gift"
+          }
+        },
+        {
+          "name": "Send Gift",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"modalId\": \"modal-id-here\",\n    \"giftId\": \"gift-id-here\",\n    \"quantity\": 1,\n    \"message\": \"Here's a gift for you!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/gift/send",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift", "send"]
+            },
+            "description": "Send a gift to a modal"
+          }
+        },
+        {
+          "name": "Get Gift History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift", "history"]
+            },
+            "description": "Get history of gifts sent by user"
+          }
+        },
+        {
+          "name": "Get Received Gifts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gift/received",
+              "host": ["{{baseUrl}}"],
+              "path": ["gift", "received"]
+            },
+            "description": "Get list of gifts received by modal"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "description": "Payment related endpoints",
+      "item": [
+        {
+          "name": "Get Coin Plans",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payment/plans",
+              "host": ["{{baseUrl}}"],
+              "path": ["payment", "plans"]
+            },
+            "description": "Get available coin purchase plans"
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"planId\": \"plan-id-here\",\n    \"paymentMethod\": \"card\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payment/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["payment", "orders"]
+            },
+            "description": "Create a new payment order"
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orderId\": \"order-id-here\",\n    \"paymentId\": \"payment-id-here\",\n    \"signature\": \"signature-here\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payment/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["payment", "verify"]
+            },
+            "description": "Verify payment after successful transaction"
+          }
+        },
+        {
+          "name": "Get Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payment/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["payment", "history"]
+            },
+            "description": "Get user's payment history"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Livestream",
+      "description": "Livestream related endpoints",
+      "item": [
+        {
+          "name": "Create Livestream",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"My First Stream\",\n    \"description\": \"Welcome to my stream!\",\n    \"category\": \"chat\",\n    \"thumbnail\": \"thumbnail-url\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/livestream",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream"]
+            },
+            "description": "Create a new livestream"
+          }
+        },
+        {
+          "name": "Get Active Livestreams",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", "active"]
+            },
+            "description": "Get all currently active livestreams"
+          }
+        },
+        {
+          "name": "Get Featured Livestreams",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/featured",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", "featured"]
+            },
+            "description": "Get featured livestreams"
+          }
+        },
+        {
+          "name": "Get Livestream by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Get details of a specific livestream"
+          }
+        },
+        {
+          "name": "Update Livestream",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Stream Title\",\n    \"description\": \"Updated description\",\n    \"category\": \"astrology\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Update livestream details"
+          }
+        },
+        {
+          "name": "End Livestream",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id/end",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id", "end"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "End an active livestream"
+          }
+        },
+        {
+          "name": "Join Livestream",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id/join",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id", "join"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Join a livestream as a viewer"
+          }
+        },
+        {
+          "name": "Leave Livestream",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id/leave",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id", "leave"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Leave a livestream as a viewer"
+          }
+        },
+        {
+          "name": "Send Gift in Livestream",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"giftId\": \"gift-id-here\",\n    \"quantity\": 1,\n    \"message\": \"Great stream!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id/gift",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id", "gift"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Send a gift during livestream"
+          }
+        },
+        {
+          "name": "Get Chat Messages",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id/chat",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id", "chat"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Get chat messages from a livestream"
+          }
+        },
+        {
+          "name": "Send Chat Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"Hello everyone!\",\n    \"type\": \"text\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/livestream/:id/chat",
+              "host": ["{{baseUrl}}"],
+              "path": ["livestream", ":id", "chat"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Livestream ID"
+                }
+              ]
+            },
+            "description": "Send a chat message in livestream"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Support",
+      "description": "Support related endpoints",
+      "item": [
+        {
+          "name": "Create Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"subject\": \"Need help\",\n    \"description\": \"I'm having an issue with...\",\n    \"category\": \"technical\",\n    \"priority\": \"medium\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets"]
+            },
+            "description": "Create a new support ticket"
+          }
+        },
+        {
+          "name": "Get All Tickets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets?page=1&limit=10&status=open",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "open"
+                }
+              ]
+            },
+            "description": "Get all support tickets with filters and pagination"
+          }
+        },
+        {
+          "name": "Get Ticket by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Ticket ID"
+                }
+              ]
+            },
+            "description": "Get details of a specific support ticket"
+          }
+        },
+        {
+          "name": "Update Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"subject\": \"Updated subject\",\n    \"description\": \"Updated description\",\n    \"priority\": \"high\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Ticket ID"
+                }
+              ]
+            },
+            "description": "Update a support ticket"
+          }
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"comment\": \"Here's an update on my issue...\",\n    \"attachments\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets/:id/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets", ":id", "comments"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Ticket ID"
+                }
+              ]
+            },
+            "description": "Add a comment to a support ticket"
+          }
+        },
+        {
+          "name": "Close Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets/:id/close",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets", ":id", "close"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Ticket ID"
+                }
+              ]
+            },
+            "description": "Close a support ticket"
+          }
+        },
+        {
+          "name": "Reopen Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/support/tickets/:id/reopen",
+              "host": ["{{baseUrl}}"],
+              "path": ["support", "tickets", ":id", "reopen"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "Ticket ID"
+                }
+              ]
+            },
+            "description": "Reopen a closed support ticket"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Upload",
+      "description": "File upload related endpoints",
+      "item": [
+        {
+          "name": "Upload Single Image",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/upload/image",
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "image"]
+            },
+            "description": "Upload a single image file"
+          }
+        },
+        {
+          "name": "Upload Multiple Images",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": [],
+                  "description": "Up to 5 image files"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/upload/images",
+              "host": ["{{baseUrl}}"],
+              "path": ["upload", "images"]
+            },
+            "description": "Upload multiple images (max 5)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Admin panel related endpoints",
+      "item": [
+        {
+          "name": "Content Management",
+          "item": [
+            {
+              "name": "Get All Content",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "banner"
+                    }
+                  ]
+                },
+                "description": "Get all content with filters and pagination"
+              }
+            },
+            {
+              "name": "Reorder Content",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"contentIds\": [\"id1\", \"id2\", \"id3\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content/reorder",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content", "reorder"]
+                },
+                "description": "Reorder content items"
+              }
+            },
+            {
+              "name": "Get Content by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Content ID"
+                    }
+                  ]
+                },
+                "description": "Get content details by ID"
+              }
+            },
+            {
+              "name": "Create Content",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"New Content\",\n    \"description\": \"Content description\",\n    \"type\": \"banner\",\n    \"image\": \"image-url\",\n    \"link\": \"https://example.com\",\n    \"order\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content"]
+                },
+                "description": "Create new content"
+              }
+            },
+            {
+              "name": "Update Content",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Updated Content\",\n    \"description\": \"Updated description\",\n    \"image\": \"new-image-url\",\n    \"link\": \"https://example.com/updated\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Content ID"
+                    }
+                  ]
+                },
+                "description": "Update content details"
+              }
+            },
+            {
+              "name": "Delete Content",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Content ID"
+                    }
+                  ]
+                },
+                "description": "Delete content"
+              }
+            },
+            {
+              "name": "Toggle Content Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Content ID"
+                    }
+                  ]
+                },
+                "description": "Toggle content active status"
+              }
+            },
+            {
+              "name": "Get Content by Type",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/content/type/:type",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "content", "type", ":type"],
+                  "variable": [
+                    {
+                      "key": "type",
+                      "value": "banner",
+                      "description": "Content type"
+                    }
+                  ]
+                },
+                "description": "Get content by specific type"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Modal Management",
+          "item": [
+            {
+              "name": "Get All Modals",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals?page=1&limit=10&status=active",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "active"
+                    }
+                  ]
+                },
+                "description": "Get all modals with filters and pagination"
+              }
+            },
+            {
+              "name": "Get Modal Statistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/stats/overview",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", "stats", "overview"]
+                },
+                "description": "Get modal statistics overview"
+              }
+            },
+            {
+              "name": "Get Modal by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Get modal details by ID"
+              }
+            },
+            {
+              "name": "Create Modal",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"New Modal\",\n    \"email\": \"modal@example.com\",\n    \"phone\": \"1234567890\",\n    \"categories\": [\"chat\", \"astrology\"],\n    \"languages\": [\"en\", \"hi\"],\n    \"experience\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals"]
+                },
+                "description": "Create new modal"
+              }
+            },
+            {
+              "name": "Update Modal",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Updated Modal Name\",\n    \"categories\": [\"chat\", \"tarot\"],\n    \"languages\": [\"en\", \"hi\", \"fr\"],\n    \"experience\": 6\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Update modal details"
+              }
+            },
+            {
+              "name": "Delete Modal",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Delete modal"
+              }
+            },
+            {
+              "name": "Toggle Modal Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Toggle modal status (block/unblock)"
+              }
+            },
+            {
+              "name": "Toggle Modal Verification",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id/verify",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id", "verify"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Toggle modal verification status"
+              }
+            },
+            {
+              "name": "Get Modal Earnings",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id/earnings",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id", "earnings"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Get modal's earnings"
+              }
+            },
+            {
+              "name": "Get Modal Reviews",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id/reviews",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id", "reviews"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Get modal's reviews"
+              }
+            },
+            {
+              "name": "Get Modal Calls",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id/calls",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id", "calls"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Get modal's call history"
+              }
+            },
+            {
+              "name": "Get Modal Chats",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/modals/:id/chats",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "modals", ":id", "chats"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Modal ID"
+                    }
+                  ]
+                },
+                "description": "Get modal's chat history"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Transaction Management",
+          "item": [
+            {
+              "name": "Get All Transactions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions?page=1&limit=10&type=credit",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "type",
+                      "value": "credit"
+                    }
+                  ]
+                },
+                "description": "Get all transactions with filters and pagination"
+              }
+            },
+            {
+              "name": "Get Transaction by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Transaction ID"
+                    }
+                  ]
+                },
+                "description": "Get transaction details by ID"
+              }
+            },
+            {
+              "name": "Update Transaction Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Transaction ID"
+                    }
+                  ]
+                },
+                "description": "Update transaction status"
+              }
+            },
+            {
+              "name": "Get Transaction Statistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/stats/overview",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", "stats", "overview"]
+                },
+                "description": "Get transaction statistics overview"
+              }
+            },
+            {
+              "name": "Export Transactions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/export?format=csv&startDate=2024-01-01&endDate=2024-03-31",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", "export"],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "csv"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2024-03-31"
+                    }
+                  ]
+                },
+                "description": "Export transactions to CSV/Excel"
+              }
+            },
+            {
+              "name": "Create Manual Transaction",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"userId\": \"user-id\",\n    \"type\": \"credit\",\n    \"amount\": 1000,\n    \"description\": \"Manual credit adjustment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/manual",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", "manual"]
+                },
+                "description": "Create a manual transaction"
+              }
+            },
+            {
+              "name": "Get Transaction Summary by Type",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/summary/by-type",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", "summary", "by-type"]
+                },
+                "description": "Get transaction summary grouped by type"
+              }
+            },
+            {
+              "name": "Get Transaction Summary by Date",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/transactions/summary/by-date",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "transactions", "summary", "by-date"]
+                },
+                "description": "Get transaction summary grouped by date"
+              }
+            }
+          ]
+        },
+        {
+          "name": "User Management",
+          "item": [
+            {
+              "name": "Get All Users",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users?page=1&limit=10&status=active",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "active"
+                    }
+                  ]
+                },
+                "description": "Get all users with filters and pagination"
+              }
+            },
+            {
+              "name": "Get User by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Get user details by ID"
+              }
+            },
+            {
+              "name": "Update User",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Updated Name\",\n    \"email\": \"updated@example.com\",\n    \"phone\": \"9876543210\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Update user details"
+              }
+            },
+            {
+              "name": "Toggle User Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Block/Unblock user"
+              }
+            },
+            {
+              "name": "Delete User",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Delete user account"
+              }
+            },
+            {
+              "name": "Get User Transactions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id/transactions",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id", "transactions"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Get user's transaction history"
+              }
+            },
+            {
+              "name": "Get User Chats",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id/chats",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id", "chats"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Get user's chat history"
+              }
+            },
+            {
+              "name": "Get User Calls",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id/calls",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id", "calls"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Get user's call history"
+              }
+            },
+            {
+              "name": "Adjust User Wallet",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"amount\": 1000,\n    \"type\": \"credit\",\n    \"reason\": \"Bonus coins\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users/:id/wallet/adjust",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users", ":id", "wallet", "adjust"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "User ID"
+                    }
+                  ]
+                },
+                "description": "Adjust user's wallet balance"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin Management",
+          "item": [
+            {
+              "name": "Get All Admins",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins"]
+                },
+                "description": "Get list of all admin users"
+              }
+            },
+            {
+              "name": "Get Admin by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Admin ID"
+                    }
+                  ]
+                },
+                "description": "Get admin details by ID"
+              }
+            },
+            {
+              "name": "Create Admin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"New Admin\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"securepassword\",\n    \"role\": \"moderator\",\n    \"permissions\": [\"users.view\", \"users.edit\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins"]
+                },
+                "description": "Create new admin user"
+              }
+            },
+            {
+              "name": "Update Admin",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Updated Admin Name\",\n    \"email\": \"updated@example.com\",\n    \"role\": \"admin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Admin ID"
+                    }
+                  ]
+                },
+                "description": "Update admin details"
+              }
+            },
+            {
+              "name": "Delete Admin",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Admin ID"
+                    }
+                  ]
+                },
+                "description": "Delete admin user"
+              }
+            },
+            {
+              "name": "Update Admin Permissions",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"permissions\": [\"users.view\", \"users.edit\", \"modals.view\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins/:id/permissions",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins", ":id", "permissions"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Admin ID"
+                    }
+                  ]
+                },
+                "description": "Update admin permissions"
+              }
+            },
+            {
+              "name": "Toggle Admin Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Admin ID"
+                    }
+                  ]
+                },
+                "description": "Toggle admin active status"
+              }
+            },
+            {
+              "name": "Get Admin Activity",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/admins/:id/activity",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "admins", ":id", "activity"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Admin ID"
+                    }
+                  ]
+                },
+                "description": "Get admin activity logs"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Settings Management",
+          "item": [
+            {
+              "name": "Get All Settings",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings"]
+                },
+                "description": "Get all application settings"
+              }
+            },
+            {
+              "name": "Get Settings by Category",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings/category/:category",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings", "category", ":category"],
+                  "variable": [
+                    {
+                      "key": "category",
+                      "value": "payment",
+                      "description": "Settings category"
+                    }
+                  ]
+                },
+                "description": "Get settings by category"
+              }
+            },
+            {
+              "name": "Get Setting by Key",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings/key/:key",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings", "key", ":key"],
+                  "variable": [
+                    {
+                      "key": "key",
+                      "value": "min_withdrawal_amount",
+                      "description": "Setting key"
+                    }
+                  ]
+                },
+                "description": "Get setting by key"
+              }
+            },
+            {
+              "name": "Create Setting",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"key\": \"new_setting_key\",\n    \"value\": \"setting_value\",\n    \"category\": \"general\",\n    \"description\": \"New setting description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings"]
+                },
+                "description": "Create new setting"
+              }
+            },
+            {
+              "name": "Update Setting",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"value\": \"updated_value\",\n    \"description\": \"Updated description\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Setting ID"
+                    }
+                  ]
+                },
+                "description": "Update setting"
+              }
+            },
+            {
+              "name": "Delete Setting",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Setting ID"
+                    }
+                  ]
+                },
+                "description": "Delete setting"
+              }
+            },
+            {
+              "name": "Bulk Update Settings",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"settings\": [\n        {\n            \"key\": \"setting1\",\n            \"value\": \"new_value1\"\n        },\n        {\n            \"key\": \"setting2\",\n            \"value\": \"new_value2\"\n        }\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/settings/bulk-update",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "settings", "bulk-update"]
+                },
+                "description": "Update multiple settings at once"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Withdrawal Management",
+          "item": [
+            {
+              "name": "Get All Withdrawals",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/withdrawals?page=1&limit=10&status=pending",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "withdrawals"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "pending"
+                    }
+                  ]
+                },
+                "description": "Get all withdrawals with filters and pagination"
+              }
+            },
+            {
+              "name": "Get Withdrawal by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/withdrawals/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "withdrawals", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Withdrawal ID"
+                    }
+                  ]
+                },
+                "description": "Get withdrawal details by ID"
+              }
+            },
+            {
+              "name": "Update Withdrawal Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/withdrawals/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "withdrawals", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Withdrawal ID"
+                    }
+                  ]
+                },
+                "description": "Update withdrawal status"
+              }
+            },
+            {
+              "name": "Get Withdrawal Statistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/withdrawals/stats/overview",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "withdrawals", "stats", "overview"]
+                },
+                "description": "Get withdrawal statistics overview"
+              }
+            },
+            {
+              "name": "Process Withdrawal",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"action\": \"approve\",\n    \"remarks\": \"Payment processed successfully\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/withdrawals/:id/process",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "withdrawals", ":id", "process"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Withdrawal ID"
+                    }
+                  ]
+                },
+                "description": "Process (approve/reject) withdrawal request"
+              }
+            },
+            {
+              "name": "Export Withdrawals",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/withdrawals/export?format=csv&startDate=2024-01-01&endDate=2024-03-31",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "withdrawals", "export"],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "csv"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2024-03-31"
+                    }
+                  ]
+                },
+                "description": "Export withdrawals to CSV/Excel"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Gift Management",
+          "item": [
+            {
+              "name": "Get All Gifts",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts?page=1&limit=10",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "description": "Get all gifts with filters and pagination"
+              }
+            },
+            {
+              "name": "Get Gift by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Gift ID"
+                    }
+                  ]
+                },
+                "description": "Get gift details by ID"
+              }
+            },
+            {
+              "name": "Create Gift",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"New Gift\",\n    \"description\": \"Gift description\",\n    \"price\": 100,\n    \"image\": \"gift-image-url\",\n    \"category\": \"general\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts"]
+                },
+                "description": "Create new gift"
+              }
+            },
+            {
+              "name": "Update Gift",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Updated Gift Name\",\n    \"description\": \"Updated description\",\n    \"price\": 150\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Gift ID"
+                    }
+                  ]
+                },
+                "description": "Update gift details"
+              }
+            },
+            {
+              "name": "Delete Gift",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Gift ID"
+                    }
+                  ]
+                },
+                "description": "Delete gift"
+              }
+            },
+            {
+              "name": "Toggle Gift Status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts/:id/status",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts", ":id", "status"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Gift ID"
+                    }
+                  ]
+                },
+                "description": "Toggle gift active status"
+              }
+            },
+            {
+              "name": "Toggle Gift Featured",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts/:id/featured",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts", ":id", "featured"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "",
+                      "description": "Gift ID"
+                    }
+                  ]
+                },
+                "description": "Toggle gift featured status"
+              }
+            },
+            {
+              "name": "Get Gift Statistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/admin/gifts/stats/overview",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "gifts", "stats", "overview"]
+                },
+                "description": "Get gift statistics overview"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} 
